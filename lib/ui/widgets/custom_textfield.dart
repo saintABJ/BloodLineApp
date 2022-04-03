@@ -5,21 +5,19 @@ class CustomTextField extends StatelessWidget {
   final String label;
   final String hint;
   final bool obscure;
-  final Widget suffixIcon;
   final TextEditingController controller;
   final TextCapitalization textCapitalization;
   final TextInputType inputType;
   const CustomTextField(
       {Key? key,
-     required this.onSaved,
-     required this.label,
-     this.obscure = false,
-     required this.suffixIcon,
-     required this.controller,
-     this.textCapitalization = TextCapitalization.none,
-     this.inputType = TextInputType.text,
-     required this.hint,
-     required this.onValidate})
+      required this.onSaved,
+      required this.label,
+      this.obscure = false,
+      required this.controller,
+      this.textCapitalization = TextCapitalization.none,
+      this.inputType = TextInputType.text,
+      required this.hint,
+      required this.onValidate})
       : super(key: key);
 
   @override
@@ -30,26 +28,25 @@ class CustomTextField extends StatelessWidget {
       child: TextFormField(
         // autovalidate: true,
         validator: (value) {
-          if (onValidate != null) return onValidate(value!);
+          return onValidate(value!);
         },
         onSaved: (value) {
-          if (onSaved != null) onSaved(value!);
+          onSaved(value!);
 
         },
-          
-        keyboardType: inputType,
-        textCapitalization: textCapitalization,
-        controller: controller,
-        style: TextStyle(color: Colors.white),
-        obscureText: obscure,
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          labelText: label,
-          labelStyle: TextStyle(color: Colors.grey),
-          hintStyle: TextStyle(color: Colors.white),
-          hintText: hint,
-          suffixIcon: suffixIcon,
-        ),
+
+      keyboardType: inputType,
+      textCapitalization: textCapitalization,
+      controller: controller,
+      style: TextStyle(color: Colors.white),
+      obscureText: obscure,
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        labelText: label,
+        labelStyle: TextStyle(color: Colors.grey),
+        hintStyle: TextStyle(color: Colors.white),
+        hintText: hint,
+      ),
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:flutter_polygon_clipper/flutter_polygon_clipper.dart';
 import 'package:grazac_blood_line_app/model/user_model.dart';
 import 'package:grazac_blood_line_app/ui/base_screen.dart';
 import 'package:grazac_blood_line_app/ui/donors_list.dart';
+import 'package:grazac_blood_line_app/resources/dio_client.dart';
 import 'package:grazac_blood_line_app/ui/widgets/custom_textfield.dart';
 
 class SignUp extends StatefulWidget {
@@ -19,7 +20,7 @@ class _SignupState extends State<SignUp> {
   final _phoneNumber = TextEditingController();
 
   String? selectedGender, selectedRhesusFactor, selectedBloodGroup;
-  final _scaffoldkey = GlobalKey<ScaffoldState>();
+  // final _scaffoldkey = GlobalKey<ScaffoldState>();
   String signupText = "Become A" "\nLife Saver Today!";
   bool index = true;
   bool isLoading = false;
@@ -65,8 +66,6 @@ class _SignupState extends State<SignUp> {
       )
       .toList();
 
-  get dioClient => null;
-
   void _signup() async {
     UserModel user = UserModel(
       userName: 'userName',
@@ -78,7 +77,7 @@ class _SignupState extends State<SignUp> {
     );
     if (_formkey.currentState?.validate() ?? false) {
       _formkey.currentState?.save();
-      var response = dioClient.createPost(user);
+      var response = createPost(user);
       print(response);
     } else {
       return;
@@ -93,7 +92,7 @@ class _SignupState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff44130f),
-      key: _scaffoldkey,
+      // key: _scaffoldkey,
       body: BaseScreen(
         child: SafeArea(
           child: Padding(
@@ -103,20 +102,20 @@ class _SignupState extends State<SignUp> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    IconButton(
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => DonorsList()));
-                      },
-                    )
-                  ],
-                ),
+                //     IconButton(
+                //       icon: const Icon(
+                //         Icons.arrow_back,
+                //         color: Colors.white,
+                //       ),
+                //       onPressed: () {
+                //         Navigator.pushReplacement(
+                //             context,
+                //             MaterialPageRoute(
+                //                 builder: (context) => DonorsList()));
+                //       },
+                //     )
+                   ],
+                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
@@ -151,14 +150,13 @@ class _SignupState extends State<SignUp> {
             inputType: TextInputType.emailAddress,
             controller: _userName,
             onSaved: (value) {
-              //       user.userName = userName;
+                //     user.userName = value;
             },
             label: "Username",
             hint: "saintABJ",
             onValidate: (value) {
               if (value.isEmpty) return 'This field can\'t be empty';
             },
-            suffixIcon: widget,
           ),
           const SizedBox(
             height: 20,
@@ -167,14 +165,14 @@ class _SignupState extends State<SignUp> {
             inputType: TextInputType.number,
             controller: _age,
             onSaved: (value) {
-              //      user.age = int.parse(value);
+                    var user;
+            //        user.age = int.parse(value);
             },
             hint: "Age",
             onValidate: (value) {
               if (value.isEmpty) return 'This field can\'t be empty';
             },
             label: "Age",
-            suffixIcon: widget,
           ),
           const SizedBox(
             height: 20,
@@ -183,7 +181,8 @@ class _SignupState extends State<SignUp> {
             inputType: TextInputType.number,
             controller: _phoneNumber,
             onSaved: (value) {
-              //       user.phoneNumber = value;
+                     var user;
+               //      user.phoneNumber = value;
             },
             onValidate: (value) {
               if (value.length != 10) {
@@ -194,7 +193,6 @@ class _SignupState extends State<SignUp> {
             },
             label: 'Phone Number',
             hint: 'Ex: 1234567890',
-            suffixIcon: widget,
           ),
           const SizedBox(
             height: 20,
@@ -214,7 +212,7 @@ class _SignupState extends State<SignUp> {
               items: _gender,
               onChanged: (String? genders) {
                 setState(() {
-                  //          gender= newvalue;
+                  var gender= selectedGender;
                   print(selectedGender);
                 });
               },
@@ -241,7 +239,7 @@ class _SignupState extends State<SignUp> {
               items: _rhesusFactor,
               onChanged: (String? newvalue) {
                 setState(() {
-                  //        selectedValue2 = newvalue;
+                  var selectedValue2 = selectedRhesusFactor;
                   print(selectedRhesusFactor);
                 });
               },
@@ -268,7 +266,7 @@ class _SignupState extends State<SignUp> {
                 items: _bloodgroups,
                 onChanged: (String? newvalue) {
                   setState(() {
-                    //         selectedValue3 = newvalue;
+                    var selectedValue3 = selectedBloodGroup;
                     print(selectedBloodGroup);
                   });
                 }),

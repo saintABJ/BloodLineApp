@@ -1,20 +1,19 @@
-
 class UserModel {
   UserModel({
-    required this.userName,
-    required this.age,
-    required this.bloodGroup,
-    required this.gender,
-    required this.phoneNumber,
-    required this.rhesusFactor,
+    this.userName,
+    this.age,
+    this.bloodGroup,
+    this.gender,
+    this.phoneNumber,
+    this.rhesusFactor,
   });
 
-  String userName;
-  int age;
-  String bloodGroup;
-  String gender;
-  String phoneNumber;
-  String rhesusFactor;
+  String? userName;
+  String? age;
+  String? bloodGroup;
+  String? gender;
+  String? phoneNumber;
+  String? rhesusFactor;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         userName: json["userName"],

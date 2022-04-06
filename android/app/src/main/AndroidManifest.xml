@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.grazac_blood_line_app">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
    <application
         android:label="grazac_blood_line_app"
         android:name="${applicationName}"

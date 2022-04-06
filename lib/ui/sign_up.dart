@@ -3,7 +3,8 @@ import 'package:flutter_polygon_clipper/flutter_polygon_clipper.dart';
 import 'package:grazac_blood_line_app/model/user_model.dart';
 import 'package:grazac_blood_line_app/ui/base_screen.dart';
 import 'package:grazac_blood_line_app/ui/donors_list.dart';
-import 'package:grazac_blood_line_app/resources/dio_client.dart';
+import 'package:grazac_blood_line_app/resources/services.dart';
+import 'package:grazac_blood_line_app/ui/donors_list_tile.dart';
 import 'package:grazac_blood_line_app/ui/widgets/custom_textfield.dart';
 
 class SignUp extends StatefulWidget {
@@ -67,27 +68,32 @@ class _SignupState extends State<SignUp> {
       .toList();
 
   void _signup() async {
-    UserModel user = UserModel(
-      userName: 'userName',
-      gender: 'gender',
-      phoneNumber: 'phoneNumber',
-      bloodGroup: 'bloodGroup',
-      rhesusFactor: 'rhesusFactor',
-      age: 0,
-    );
     if (_formkey.currentState?.validate() ?? false) {
       _formkey.currentState?.save();
+      UserModel user = UserModel(
+          userName: _userName.text,
+          age: int.parse(_age.text),
+          bloodGroup: selectedBloodGroup!,
+          gender: selectedGender!,
+          phoneNumber: _phoneNumber.text,
+          rhesusFactor: selectedRhesusFactor!);
+      print(user.toJson());
       var response = createPost(user);
-      print(response);
     } else {
       return;
     }
 
     setState(() {
       isLoading = true;
+
+     Navigator.pushReplacement(
+     context, MaterialPageRoute(builder: (context) => DonorsList()));
+
     });
+     
   }
 
+  // late UserModel user;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,20 +108,20 @@ class _SignupState extends State<SignUp> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                //     IconButton(
-                //       icon: const Icon(
-                //         Icons.arrow_back,
-                //         color: Colors.white,
-                //       ),
-                //       onPressed: () {
-                //         Navigator.pushReplacement(
-                //             context,
-                //             MaterialPageRoute(
-                //                 builder: (context) => DonorsList()));
-                //       },
-                //     )
-                   ],
-                 ),
+                    //     IconButton(
+                    //       icon: const Icon(
+                    //         Icons.arrow_back,
+                    //         color: Colors.white,
+                    //       ),
+                    //       onPressed: () {
+                    //         Navigator.pushReplacement(
+                    //             context,
+                    //             MaterialPageRoute(
+                    //                 builder: (context) => DonorsList()));
+                    //       },
+                    //     )
+                  ],
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
@@ -149,9 +155,7 @@ class _SignupState extends State<SignUp> {
             textCapitalization: TextCapitalization.words,
             inputType: TextInputType.emailAddress,
             controller: _userName,
-            onSaved: (value) {
-                //     user.userName = value;
-            },
+            onSaved: (value) {},
             label: "Username",
             hint: "saintABJ",
             onValidate: (value) {
@@ -164,10 +168,7 @@ class _SignupState extends State<SignUp> {
           CustomTextField(
             inputType: TextInputType.number,
             controller: _age,
-            onSaved: (value) {
-                    var user;
-            //        user.age = int.parse(value);
-            },
+            onSaved: (value) {},
             hint: "Age",
             onValidate: (value) {
               if (value.isEmpty) return 'This field can\'t be empty';
@@ -180,10 +181,7 @@ class _SignupState extends State<SignUp> {
           CustomTextField(
             inputType: TextInputType.number,
             controller: _phoneNumber,
-            onSaved: (value) {
-                     var user;
-               //      user.phoneNumber = value;
-            },
+            onSaved: (value) {},
             onValidate: (value) {
               if (value.length != 10) {
                 return 'Phone Number must be of 10 digits';
@@ -212,8 +210,7 @@ class _SignupState extends State<SignUp> {
               items: _gender,
               onChanged: (String? genders) {
                 setState(() {
-                  var gender= selectedGender;
-                  print(selectedGender);
+                  selectedGender = genders!;
                 });
               },
             ),
@@ -239,8 +236,7 @@ class _SignupState extends State<SignUp> {
               items: _rhesusFactor,
               onChanged: (String? newvalue) {
                 setState(() {
-                  var selectedValue2 = selectedRhesusFactor;
-                  print(selectedRhesusFactor);
+                  selectedRhesusFactor = newvalue!;
                 });
               },
             ),
@@ -266,8 +262,7 @@ class _SignupState extends State<SignUp> {
                 items: _bloodgroups,
                 onChanged: (String? newvalue) {
                   setState(() {
-                    var selectedValue3 = selectedBloodGroup;
-                    print(selectedBloodGroup);
+                    selectedBloodGroup = newvalue!;
                   });
                 }),
           ),

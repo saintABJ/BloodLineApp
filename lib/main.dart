@@ -2,7 +2,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
-import 'package:grazac_blood_line_app/ui/sign_up.dart';
+import 'package:grazac_blood_line_app/ui/home_screen.dart';
+import 'package:grazac_blood_line_app/ui/add_blood_sample.dart';
 
 void main() => runApp(
       DevicePreview(
@@ -46,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void navigationPage() {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (_) => SignUp()));
+    context, MaterialPageRoute(builder: (_) => const SignUp()));
   }
 
   @override

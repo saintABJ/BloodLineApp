@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polygon_clipper/flutter_polygon_clipper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grazac_blood_line_app/model/user_model.dart';
-import 'package:grazac_blood_line_app/ui/base_screen.dart';
+import 'package:grazac_blood_line_app/ui/background.dart';
 import 'package:grazac_blood_line_app/ui/donors_list.dart';
 import 'package:grazac_blood_line_app/resources/services.dart';
-import 'package:grazac_blood_line_app/ui/donors_list_tile.dart';
+import 'package:grazac_blood_line_app/ui/home_screen.dart';
+import 'package:grazac_blood_line_app/ui/profile_screen.dart';
 import 'package:grazac_blood_line_app/ui/widgets/custom_textfield.dart';
 
 class SignUp extends StatefulWidget {
@@ -68,7 +69,7 @@ class _SignupState extends State<SignUp> {
       )
       .toList();
 
-  void _signup() async {
+  void _addUser() async {
     if (_formkey.currentState?.validate() ?? false) {
       _formkey.currentState?.save();
       UserModel user = UserModel(
@@ -83,6 +84,33 @@ class _SignupState extends State<SignUp> {
       });
       var response = await BloodSampleServices.createPost(user);
       var getList = await BloodSampleServices.getUserModel();
+      
+
+      // if (getUser == "A Blood Sample shown successfully") {
+      //   Fluttertoast.showToast(
+      //       msg: response!,
+      //       toastLength: Toast.LENGTH_SHORT,
+      //       gravity: ToastGravity.BOTTOM,
+      //       timeInSecForIosWeb: 1,
+      //       backgroundColor: Colors.green,
+      //       textColor: Colors.white,
+      //       fontSize: 16.0);    
+      //    Future.delayed(const Duration(seconds: 5), () {
+      //     Navigator.pushReplacement(
+      //         context,
+      //         MaterialPageRoute(
+      //             builder: (context) => ProfileScreen(donors: getUser.)));
+      //   });
+      // } else {
+      //   Fluttertoast.showToast(
+      //       msg: response!,
+      //       toastLength: Toast.LENGTH_SHORT,
+      //       gravity: ToastGravity.BOTTOM,
+      //       timeInSecForIosWeb: 1,
+      //       backgroundColor: Colors.red,
+      //       textColor: Colors.white,
+      //       fontSize: 16.0);
+      // }
       setState(() {
         isLoading = false;
       });
@@ -95,12 +123,12 @@ class _SignupState extends State<SignUp> {
             backgroundColor: Colors.green,
             textColor: Colors.white,
             fontSize: 16.0);
-        Future.delayed(const Duration(seconds: 2), () {
-          Navigator.pushReplacement(
+            Future.delayed(const Duration(seconds: 5), () {
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                   builder: (context) => DonorsList(
-                        donors: getList.item1!,
+                  donors: getList.item1!,
                       )));
         });
       } else {
@@ -116,7 +144,6 @@ class _SignupState extends State<SignUp> {
     }
   }
 
-  // late UserModel user;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,30 +157,17 @@ class _SignupState extends State<SignUp> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Row(
-                  children: <Widget>[
-                    //     IconButton(
-                    //       icon: const Icon(
-                    //         Icons.arrow_back,
-                    //         color: Colors.white,
-                    //       ),
-                    //       onPressed: () {
-                    //         Navigator.pushReplacement(
-                    //             context,
-                    //             MaterialPageRoute(
-                    //                 builder: (context) => DonorsList()));
-                    //       },
-                    //     )
+                  children: const <Widget>[
+
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    GestureDetector(
-                      child: Text(
-                        signupText,
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 35),
-                      ),
+                    Text(
+                      signupText,
+                      style:
+                          const TextStyle(color: Colors.white, fontSize: 35),
                     ),
                   ],
                 ),
@@ -180,7 +194,7 @@ class _SignupState extends State<SignUp> {
             controller: _userName,
             onSaved: (value) {},
             label: "Username",
-            hint: "saintABJ",
+            hint: "Ex: Ayo Test",
             onValidate: (value) {
               if (value.isEmpty) return 'This field can\'t be empty';
             },
@@ -207,7 +221,7 @@ class _SignupState extends State<SignUp> {
             onSaved: (value) {},
             onValidate: (value) {
               if (value.length != 10) {
-                return 'Phone Number must be of 10 digits';
+                return 'Phone Number must be 10 digits';
               } else if (value.isEmpty) {
                 return 'This field can\'t be empty';
               }
@@ -316,7 +330,7 @@ class _SignupState extends State<SignUp> {
                               Icons.arrow_forward,
                               color: Colors.white,
                             ),
-                            onPressed: _signup),
+                            onPressed: _addUser),
                   ),
                 ),
               ),

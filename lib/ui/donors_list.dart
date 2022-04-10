@@ -24,8 +24,6 @@ class DonorsList extends StatefulWidget {
 class _DonorsListState extends State<DonorsList> {
   final _scaffoldkey = GlobalKey<ScaffoldState>();
 
-  UserModel user = UserModel();
-  
   List blood = ['All', 'A+', 'A-', 'B+', 'B-', 'O+', 'O-'];
   String selectedValue = 'All';
 
@@ -57,9 +55,7 @@ class _DonorsListState extends State<DonorsList> {
                 ),
                 onSelected: (value) {
                   setState(() {
-
                     selectedValue = 'value';
-                                    
                   });
                   // getUserModel();
                 },
@@ -78,13 +74,14 @@ class _DonorsListState extends State<DonorsList> {
                 itemBuilder: (context, index) {
                   var donors = widget.donors[index];
                   return ListTile(
-                    onLongPress: () {
-                      
-                    },
+                    onLongPress: () {},
                     onTap: () async {
-        //               var getUser = await BloodSampleServices.getSingleUser(user);
-                       Navigator.pushReplacement(
-                       context, MaterialPageRoute(builder: (context) => ProfileScreen(donors: user)));
+                      //               var getUser = await BloodSampleServices.getSingleUser(user);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ProfileScreen(donors: donors)));
                     },
                     title: Column(
                       children: [
@@ -95,7 +92,8 @@ class _DonorsListState extends State<DonorsList> {
                             child: Column(
                               children: <Widget>[
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Text(
                                       'Name: ${donors.userName}',
@@ -105,15 +103,16 @@ class _DonorsListState extends State<DonorsList> {
                                     ),
                                     Image(
                                       image: AssetImage(
-                                        'images/bloodline_icon.png'),
-                                        height: 50,
-                                        width: 50,
-                                        ),
+                                          'images/bloodline_icon.png'),
+                                      height: 50,
+                                      width: 50,
+                                    ),
                                   ],
                                 ),
                                 // Spacer(),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Text(
                                       'Phone Number: ${donors.phoneNumber}',
@@ -126,24 +125,13 @@ class _DonorsListState extends State<DonorsList> {
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 15),
                                       ),
-                                    ),                               
+                                    ),
                                   ],
                                 ),
                                 Row(
-                                  children: [
-                                    Text('Click to view details')
-                                  ],
+                                  children: [Text('Click to view details')],
                                 ),
-                                Spacer(),                                                 
-                               // Row(
-                                //   children: <Widget>[
-                                //     Container(
-                                //         margin: EdgeInsets.symmetric(vertical: 8.0),
-                                //         height: 2.0,
-                                //         width: 18.0,
-                                //         color: Color(0xff00d6ff)),
-                                //   ],
-                                // ),
+                                Spacer(),
                               ],
                             ),
                           ),
@@ -182,24 +170,20 @@ class _DonorsListState extends State<DonorsList> {
         backgroundColor: Colors.red[900],
         key: _scaffoldkey,
         appBar: AppBar(
-          leading:  IconButton(  
-            alignment: Alignment.center,           
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => HomeScreen()));
-              },
-            ) ,
+          leading: IconButton(
+            alignment: Alignment.center,
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()));
+            },
+          ),
           title: Text('Donors'),
-          
-          actions: <Widget>[    
-           
-          ],
+          actions: <Widget>[],
         ),
-        
         body: getList());
   }
 }

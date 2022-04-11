@@ -18,19 +18,17 @@ class _BasescreenState extends State<BaseScreen> {
           alignment: Alignment.topRight,
           child: FractionalTranslation(
             translation: const Offset(0.35, -0.20),
-            child: Container(
-              child: SizedBox(
-                height: 300,
-                child: FlutterClipPolygon(
-                  sides: 6,
-                  rotate: 120,
-                  borderRadius: 15,
-                  child: Container(
-                    // alignment: Alignment.bottomLeft,
-                    color: Colors.red,
-                    child: const Icon(
-                              Icons.water,
-                    ),
+            child: SizedBox(
+              height: 300,
+              child: FlutterClipPolygon(
+                sides: 6,
+                rotate: 120,
+                borderRadius: 15,
+                child: Container(
+                  // alignment: Alignment.bottomLeft,
+                  color: Colors.red,
+                  child: const Icon(
+                            Icons.water,
                   ),
                 ),
               ),
@@ -41,22 +39,20 @@ class _BasescreenState extends State<BaseScreen> {
           alignment: Alignment.bottomLeft,
           child: FractionalTranslation(
             translation: const Offset(-.50, 0.45),
-            child: Container(
-              child: SizedBox(
-                height: 300,
-                width: 300,
-                child: FlutterClipPolygon(
-                  sides: 6,
-                  rotate: 300,
-                  borderRadius: 15,
+            child: SizedBox(
+              height: 300,
+              width: 300,
+              child: FlutterClipPolygon(
+                sides: 6,
+                rotate: 300,
+                borderRadius: 15,
+                child: Container(
+                  color: Colors.red,
                   child: Container(
-                    color: Colors.red,
-                    child: Container(
-                      alignment: Alignment.topRight,
-                      child: const Icon(
-                        Icons.water,
-                        size: 25,
-                      ),
+                    alignment: Alignment.topRight,
+                    child: const Icon(
+                      Icons.water,
+                      size: 25,
                     ),
                   ),
                 ),
@@ -72,10 +68,8 @@ class _BasescreenState extends State<BaseScreen> {
               sides: 6,
               rotate: 120,
               borderRadius: 20,
-              child: Container(
-                child: const SizedBox(
-                  height: 2,
-                ),
+              child: const SizedBox(
+                height: 2,
               ),
             ),
           ),

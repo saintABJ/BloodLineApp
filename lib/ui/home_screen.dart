@@ -1,4 +1,6 @@
 
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:grazac_blood_line_app/resources/services.dart';
 import 'package:grazac_blood_line_app/ui/donors_list.dart';
@@ -6,6 +8,8 @@ import 'package:grazac_blood_line_app/ui/add_blood_sample.dart';
 import 'package:grazac_blood_line_app/ui/add_blood_sample.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -13,17 +17,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   
   bool isLoggedIn = false;
-  var _scaffoldkey = GlobalKey<ScaffoldState>();
-  
-
-  // getUser() async {
-  //   var user = await FirebaseAuthProvider().getCurrentUser();
-  //   if (user == null) {
-  //     setState(() {
-  //       isLoggedIn = true;
-  //     });
-  //   }
-  // }
+  final _scaffoldkey = GlobalKey<ScaffoldState>();
 
   showErrorDialog() {
     return showDialog(
@@ -48,18 +42,10 @@ class _HomeScreenState extends State<HomeScreen> {
         });
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   getUser();
-  // }
-
-  // showSnackbar(message) {
-  //   _scaffoldkey.currentState.showSnackBar(SnackBar(
-  //     backgroundColor: Colors.purple,
-  //     content: Text(message ?? "Something went wrong, try again later."),
-  //   ));
-  // }
+  @override
+  void initState() {
+  super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,18 +58,6 @@ class _HomeScreenState extends State<HomeScreen> {
           'BloodLine',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        // actions: <Widget>[
-        //   isLoggedIn
-        //       ? const SizedBox()
-        //       // : IconButton(
-        //       //     icon: const Icon(Icons.logout),
-        //       //     onPressed: () async {
-        //       //       // await FirebaseAuthProvider().logout();
-        //       //       // showSnackbar('You are logged out');
-        //       //       // getUser();
-        //       //     })
-        // ],
-        // backgroundColor: Colors.red.shade900,
         centerTitle: true,
       ),
       body: Stack(
@@ -126,6 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: () async {
                       var getList = await BloodSampleServices.getUserModel();
                     //  print(getList);
+                      // ignore: unnecessary_null_comparison
                       if (getList != null) {
                         showErrorDialog();
                       } else {

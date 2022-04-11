@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_polygon_clipper/flutter_polygon_clipper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -133,7 +135,6 @@ class _SignupState extends State<SignUp> {
               children: <Widget>[
                 Row(
                   children: const <Widget>[
-
                   ],
                 ),
                 Row(

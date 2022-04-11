@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polygon_clipper/flutter_polygon_clipper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grazac_blood_line_app/model/user_model.dart';
-import 'package:grazac_blood_line_app/ui/background.dart';
+import 'package:grazac_blood_line_app/ui/background_screen.dart';
 import 'package:grazac_blood_line_app/ui/donors_list.dart';
 import 'package:grazac_blood_line_app/resources/services.dart';
 import 'package:grazac_blood_line_app/ui/home_screen.dart';
@@ -86,31 +86,6 @@ class _SignupState extends State<SignUp> {
       var getList = await BloodSampleServices.getUserModel();
       
 
-      // if (getUser == "A Blood Sample shown successfully") {
-      //   Fluttertoast.showToast(
-      //       msg: response!,
-      //       toastLength: Toast.LENGTH_SHORT,
-      //       gravity: ToastGravity.BOTTOM,
-      //       timeInSecForIosWeb: 1,
-      //       backgroundColor: Colors.green,
-      //       textColor: Colors.white,
-      //       fontSize: 16.0);    
-      //    Future.delayed(const Duration(seconds: 5), () {
-      //     Navigator.pushReplacement(
-      //         context,
-      //         MaterialPageRoute(
-      //             builder: (context) => ProfileScreen(donors: getUser.)));
-      //   });
-      // } else {
-      //   Fluttertoast.showToast(
-      //       msg: response!,
-      //       toastLength: Toast.LENGTH_SHORT,
-      //       gravity: ToastGravity.BOTTOM,
-      //       timeInSecForIosWeb: 1,
-      //       backgroundColor: Colors.red,
-      //       textColor: Colors.white,
-      //       fontSize: 16.0);
-      // }
       setState(() {
         isLoading = false;
       });

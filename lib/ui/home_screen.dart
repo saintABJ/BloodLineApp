@@ -11,8 +11,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  
   bool isLoggedIn = false;
   var _scaffoldkey = GlobalKey<ScaffoldState>();
+  
 
   // getUser() async {
   //   var user = await FirebaseAuthProvider().getCurrentUser();
@@ -28,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-              content: const Text('You need to Sign up to continue!',
+              content: const Text('Add blood sample to continue!',
                   style: TextStyle(color: Colors.red)),
               actions: <Widget>[
                 FlatButton(
@@ -61,6 +63,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    
     return Scaffold(
       key: _scaffoldkey,
       appBar: AppBar(
@@ -92,9 +96,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Material(
                   color: Colors.green.shade500,
                   child: InkWell(
-                    onTap: () {
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: (context) => DonorsList(donors: getList.item1!)));
+                    onTap: () async {
+                      var getList = await BloodSampleServices.getUserModel();
+                      Navigator.push(context,
+                      MaterialPageRoute(builder: (context) =>   DonorsList(donors: getList.item1!,)));
                     },
                     child: Center(
                       child: Container(

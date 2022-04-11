@@ -23,7 +23,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           border: Border(bottom: BorderSide(color: Colors.grey, width: 1))),
       child: TextFormField(
         // autovalidate: true,
@@ -38,13 +38,13 @@ class CustomTextField extends StatelessWidget {
       keyboardType: inputType,
       textCapitalization: textCapitalization,
       controller: controller,
-      style: TextStyle(color: Colors.white),
+      style: const TextStyle(color: Colors.white),
       obscureText: obscure,
       decoration: InputDecoration(
         border: InputBorder.none,
         labelText: label,
-        labelStyle: TextStyle(color: Colors.grey),
-        hintStyle: TextStyle(color: Colors.white),
+        labelStyle: const TextStyle(color: Colors.grey),
+        hintStyle: const TextStyle(color: Colors.white),
         hintText: hint,
       ),
       ),

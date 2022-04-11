@@ -1,36 +1,31 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grazac_blood_line_app/model/user_model.dart';
-import 'package:grazac_blood_line_app/ui/background.dart';
+import 'package:grazac_blood_line_app/ui/background_screen.dart';
 import 'package:grazac_blood_line_app/ui/edit_profile.dart';
 import 'package:grazac_blood_line_app/ui/home_screen.dart';
 import 'package:grazac_blood_line_app/ui/donors_list.dart';
-
-
-
 import 'package:grazac_blood_line_app/resources/services.dart';
 import 'package:grazac_blood_line_app/ui/profile_screen.dart';
 import 'package:grazac_blood_line_app/ui/add_blood_sample.dart';
 
-
 class ProfileScreen extends StatefulWidget {
-   
-   final UserModel donors;
-   ProfileScreen({required this.donors});
+  final UserModel donors;
+  ProfileScreen({required this.donors});
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
-
-class _ProfileScreenState extends State<ProfileScreen>  {
-  
-  bool isLoading = true;
+class _ProfileScreenState extends State<ProfileScreen> {
+  bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
-
   }
-
+  
   @override
   Widget build(BuildContext context) {
     var donors = widget.donors;
@@ -58,23 +53,48 @@ class _ProfileScreenState extends State<ProfileScreen>  {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              IconButton(
+                              IconButton( 
                                   icon: const Icon(
                                     Icons.delete_forever,
                                     color: Colors.white,
                                   ),
                                   onPressed: () => showConfirmationDialog(
                                       title: 'Are you sure?',
-                                      body: 'You will no longer be donor',
+                                      body: 'You will no longer be a donor',
                                       onYes: () async {
-                                       
-
-                                        Navigator.of(context)
-                                            .pushAndRemoveUntil(
+                                        var response = await BloodSampleServices.deletePost(donors);
+                                        print(response);
+                                        var getList = await BloodSampleServices.getUserModel();
+                                        if (response =="Blood Sample deleted successfully") {
+                                          Fluttertoast.showToast(
+                                              msg: response!,
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.BOTTOM,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor: Colors.green,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
+                                          Future.delayed(
+                                              const Duration(seconds: 5), () {
+                                            Navigator.pushReplacement(
+                                                context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        HomeScreen()),
-                                                (predicate) => false);
+                                                        DonorsList(
+                                                          donors:
+                                                              getList.item1!,
+                                                        )));
+                                          });
+                                        } else {
+                                          Fluttertoast.showToast(
+                                              msg: response!,
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.BOTTOM,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor: Colors.red,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
+                                        } 
                                       })),
                               IconButton(
                                 icon: const Icon(
@@ -85,9 +105,7 @@ class _ProfileScreenState extends State<ProfileScreen>  {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => EditProfile(
-                                               
-                                              )));
+                                          builder: (context) => EditProfile(donors: donors)));
                                 },
                               ),
                             ],
@@ -95,14 +113,13 @@ class _ProfileScreenState extends State<ProfileScreen>  {
                         ],
                       ),
                       Container(
-                        
                         margin: const EdgeInsets.only(left: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const <Widget>[
-                            Text('Welcome," "\nYour Profile is ready!',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
+                            Text('Welcome, \nYour Profile is ready!',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 35,
                                     fontWeight: FontWeight.bold,
@@ -154,7 +171,7 @@ class _ProfileScreenState extends State<ProfileScreen>  {
                                 child: Icon(
                                   Icons.water,
                                   color: Colors.red.shade700,
-                                  size: 220,
+                                  size: 150,
                                 ),
                               ),
                               Text(
@@ -184,24 +201,27 @@ class _ProfileScreenState extends State<ProfileScreen>  {
     showDialog(
         context: context,
         builder: (c) {
-          return AlertDialog(title: Text(title!), content: Text(body!), actions: [
-            FlatButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text(
-                "No",
-                style: TextStyle(color: Colors.green),
-              ),
-            ),
-            FlatButton(
-              onPressed: onYes,
-              child: const Text(
-                "Yes",
-                style: TextStyle(color: Colors.red),
-              ),
-            ),
-          ]);
+          return AlertDialog(
+              title: Text(title!),
+              content: Text(body!),
+              actions: [
+                FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    "No",
+                    style: TextStyle(color: Colors.green),
+                  ),
+                ),
+                FlatButton(
+                  onPressed: onYes,
+                  child: const Text(
+                    "Yes",
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              ]);
         });
   }
 }

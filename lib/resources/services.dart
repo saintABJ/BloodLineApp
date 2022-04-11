@@ -11,10 +11,10 @@ import 'package:tuple/tuple.dart';
 const String baseURL = 'https://bloodline-app.herokuapp.com';
 const String postRequest = baseURL + '/api/v1/addBloodSample';
 const String getAllRequest = baseURL + '/api/v1/viewBloodSamples';
-const String getOneRequest =
-    baseURL + '/api/v1/viewOneBloodSample/:624f9c06085d904f66e81212';
-const String patchRequest =
-    baseURL + '/api/v1/updateBloodSample/:621e728d5a7702473b818534';
+const String getOneRequest = baseURL + '/api/v1/viewOneBloodSample/:624f9c06085d904f66e81212';
+const String patchRequest = baseURL + '/api/v1/updateBloodSample/:621e728d5a7702473b818534';
+const String deleteRequest = baseURL + '/api/v1/updateBloodSample/:621e6e1c5a7702473b818532';
+
 
 class BloodSampleServices {
   static final Dio dio = Dio();
@@ -36,7 +36,40 @@ class BloodSampleServices {
       }
     }
   }
+  static Future<String?> deletePost(UserModel model) async {
+    try {
+      var response = await dio.delete(deleteRequest, data: model.toJson());
 
+      if (response.statusCode == 200) {
+        return response.data["message"];
+      } else {
+        return "Unable to delete Blood sample";
+      }
+    } catch (e) {
+      if (e is SocketException) {
+        return "No internet connection";
+      } else {
+        return "Unable to delete Blood sample";
+      }
+    }
+  }
+  static Future<String?> patchPost(UserModel model) async {
+    try {
+      var response = await dio.patch(patchRequest, data: model.toJson());
+
+      if (response.statusCode == 200) {
+        return response.data["message"];
+      } else {
+        return "Unable to update Blood sample";
+      }
+    } catch (e) {
+      if (e is SocketException) {
+        return "No internet connection";
+      } else {
+        return "Unable to update Blood sample";
+      }
+    }
+  }
   static Future<Tuple2<List<UserModel>?, String?>> getUserModel() async {
     final url = Uri.parse(getAllRequest);
 
@@ -60,8 +93,6 @@ class BloodSampleServices {
       return const Tuple2(null, "unable to get User data");
     }
   }
-
-
  static Future<String?> getSingleUser(UserModel model) async {
   final url = Uri.parse(getOneRequest);
 
@@ -84,24 +115,4 @@ class BloodSampleServices {
     return ("unable to get User data");
   }
 }
-
-
-  // static final Dio dio = Dio();
-
-  //   try {
-  //     var response = await dio.post(postRequest, data: model.toJson());
-
-  //     if (response.statusCode == 201) {
-  //       return response.data["message"];
-  //     } else {
-  //       return "Unable to create Blood sample";
-  //     }
-  //   } catch (e) {
-  //     if (e is SocketException) {
-  //       return "No internet connection";
-  //     } else {
-  //       return "Unable to create Blood sample";
-  //     }
-  //   }
-  // }
 }
